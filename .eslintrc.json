@@ -1,0 +1,125 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "jest": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-hooks",
+        "@typescript-eslint",
+        "import"
+    ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts",
+                    ".jsx",
+                    ".tsx"
+                ]
+            }
+        }
+    },
+    "rules": {
+        "react/prop-types": 0,
+        "linebreak-style": "off",
+        "import/prefer-default-export": 0,
+        "eol-last": [
+            "error",
+            "always"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "no-restricted-syntax": [
+            "error",
+            "WithStatement",
+            "BinaryExpression[operator='in']"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-debugger": "error",
+        "no-console": "warn",
+        "import/no-extraneous-dependencies": "error",
+        "import/no-cycle": "error",
+        "import/extensions": [
+            "error",
+            {
+                "js": "never",
+                "mjs": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "no-underscore-dangle": "off",
+        "lines-between-class-members": [
+            "error",
+            "always",
+            {
+                "exceptAfterSingleLine": true
+            }
+        ],
+        "max-len": [
+            1,
+            {
+                "code": 120
+            }
+        ],
+        "no-useless-constructor": "error",
+        "no-unused-vars": "error",
+        "no-empty-function": [
+            "error",
+            {
+                "allow": [
+                    "constructors"
+                ]
+            }
+        ],
+        "camelcase": "warn",
+        "class-methods-use-this": "off",
+        "max-classes-per-file": [
+            "error",
+            4
+        ],
+        "consistent-return": "off",
+        "no-shadow": "off"
+    },
+    "overrides": [
+        {
+            "files": [
+                "*.js",
+                "*.jsx"
+            ],
+            "rules": {
+                "@typescript-eslint/explicit-function-return-type": [
+                    "off"
+                ],
+                "@typescript-eslint/explicit-module-boundary-types": [
+                    "off"
+                ],
+                "@typescript-eslint/typedef": [
+                    "off"
+                ]
+            }
+        }
+    ]
+}
