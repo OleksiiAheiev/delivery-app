@@ -39,6 +39,18 @@ export default function CartProvider({ children }: IChildrenProps) {
     return total;
   };
 
+  const loadCartFromLocalStorage = () => {
+    const cartData = localStorage.getItem('cart');
+    if (cartData) {
+      return JSON.parse(cartData);
+    }
+    return [];
+  };
+  
+  function saveCartToLocalStorage(cart: ICartItem[]) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
   const addToCart = (product: IMenuItem) => {
     const existingCartItem = cartProducts.find(item => item.product.id === product.id);
 
@@ -49,15 +61,19 @@ export default function CartProvider({ children }: IChildrenProps) {
         }
         return item;
       });
+
       setCartProducts(updatedCart);
+      saveCartToLocalStorage(updatedCart);
     } else {
       setCartProducts(prevItems => [...prevItems, { product, quantity: 1 }]);
+      saveCartToLocalStorage([...cartProducts, { product, quantity: 1 }]);
     }
   };
 
   const removeFromCart = (product: IMenuItem) => {
     const updatedCart = cartProducts.filter(item => item.product.id !== product.id);
     setCartProducts(updatedCart);
+    saveCartToLocalStorage(updatedCart);
   };
 
   const changeQuantity = (product: IMenuItem, newQuantity: number) => {
@@ -81,8 +97,22 @@ export default function CartProvider({ children }: IChildrenProps) {
     setTotalAmount(newTotalAmount);
   }, [cartProducts]);
 
+  useEffect(() => {
+    const cartFromLocalStorage = loadCartFromLocalStorage();
+    if (cartFromLocalStorage.length > 0) {
+      setCartProducts(cartFromLocalStorage);
+    }
+  }, []);
+  
   return (
-    <CartContext.Provider value={{ cartProducts, totalAmount, addToCart, removeFromCart, changeQuantity, clearCart }}>
+    <CartContext.Provider value={{
+      cartProducts,
+      totalAmount,
+      addToCart,
+      removeFromCart,
+      changeQuantity,
+      clearCart,
+    }}>
       {children}
     </CartContext.Provider>
   );
