@@ -1,6 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { useCartContext } from '../contexts/CartProvider';
@@ -33,9 +33,11 @@ const FormWrapper = styled(Box)(() => ({
   },
 }));
 
-export const ButtonWrapper = styled(Box)(() => ({
+export const PurchaseControls = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'flex-end',
+  alignItems: 'center',
+  gap: '60px'
 }));
 
 export default function ShoppingCart() {
@@ -43,7 +45,7 @@ export default function ShoppingCart() {
     control, handleSubmit, getValues, reset,
   } = useForm();
 
-  const { cartProducts } = useCartContext();
+  const { totalAmount, cartProducts } = useCartContext();
 
   const onSubmit = () => {
     const formData = getValues();
@@ -66,7 +68,8 @@ export default function ShoppingCart() {
           <FormFields control={control} />
           <CartProducts />
         </FormWrapper>
-        <ButtonWrapper>
+        <PurchaseControls>
+          <Typography>Total price: {totalAmount}</Typography>
           <Button
             variant='outlined'
             size='large'
@@ -74,7 +77,7 @@ export default function ShoppingCart() {
           >
             Order
           </Button>
-        </ButtonWrapper>
+        </PurchaseControls>
       </form>
     </CartContainer>
   );

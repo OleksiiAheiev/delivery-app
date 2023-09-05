@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { IMenuItem } from '../types/types';
 import { IChildrenProps } from '../layouts/MainTemplate';
 
@@ -10,6 +10,7 @@ export interface ICartItem {
 
 interface ICartContext {
   cartProducts: ICartItem[];
+  totalAmount: number;
   addToCart: (product: IMenuItem) => void;
   removeFromCart: (product: IMenuItem) => void;
   changeQuantity: (product: IMenuItem, newQuantity: number) => void;
@@ -28,6 +29,15 @@ export const useCartContext = (): ICartContext => {
 
 export default function CartProvider({ children }: IChildrenProps) {
   const [cartProducts, setCartProducts] = useState<ICartItem[]>([]);
+  const [totalAmount, setTotalAmount] = useState<number>(0);
+
+  const calculateTotalAmount = (cartItems: ICartItem[]) => {
+    let total = 0;
+    for (const cartItem of cartItems) {
+      total += cartItem.product.price * cartItem.quantity;
+    }
+    return total;
+  };
 
   const addToCart = (product: IMenuItem) => {
     const existingCartItem = cartProducts.find(item => item.product.id === product.id);
@@ -66,8 +76,13 @@ export default function CartProvider({ children }: IChildrenProps) {
     setCartProducts([]);
   };
 
+  useEffect(() => {
+    const newTotalAmount = calculateTotalAmount(cartProducts);
+    setTotalAmount(newTotalAmount);
+  }, [cartProducts]);
+
   return (
-    <CartContext.Provider value={{ cartProducts, addToCart, removeFromCart, changeQuantity, clearCart }}>
+    <CartContext.Provider value={{ cartProducts, totalAmount, addToCart, removeFromCart, changeQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );

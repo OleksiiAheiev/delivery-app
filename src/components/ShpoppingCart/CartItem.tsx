@@ -36,11 +36,11 @@ const StyledCardActionArea = styled(CardActionArea)(() => ({
 }));
 
 const ItemDetails = styled(Box)(() => ({
-  minWidth: '250px',
+  minWidth: '220px',
   display: 'flex',
   flexDirection: 'column',
   gap: '30px',
-  '@media (min-width: 767px)': {
+  '@media (min-width: 1439px)': {
     minWidth: '300px',
   },
 }));
@@ -74,9 +74,9 @@ export default function CartItem({
 
       <ItemDetails>
         <Box>
-          <Typography variant="body1">{item.product.title}</Typography>
-          <Typography variant="body1">{item.product.price}</Typography>
-          <Typography variant="body1">Quantity: {item.quantity}</Typography>
+          <Typography variant="subtitle2">Product: {item.product.title}</Typography>
+          <Typography variant="subtitle2">Price: {item.product.price * item.quantity}</Typography>
+          <Typography variant="subtitle2">Quantity: {item.quantity}</Typography>
         </Box>
         <DetailsGroup>
           <IconButton

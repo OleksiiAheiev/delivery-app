@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonWrapper, CartWrapper } from '../../../pages/ShoppingCart';
+import { PurchaseControls, CartWrapper } from '../../../pages/ShoppingCart';
 import { Box, Button, Typography } from '@mui/material';
 import { useCartContext } from '../../../contexts/CartProvider';
 import CartItem from '../CartItem';
@@ -44,9 +44,9 @@ export default function CartProducts() {
             ))
           )}
         </CartItemsWrapper>
-        <ButtonWrapper>
+        <PurchaseControls>
           <Button variant='contained' onClick={clearCart}>Clear Cart</Button>
-        </ButtonWrapper>
+        </PurchaseControls>
       </StyledBox>
     </CartWrapper>
   );
