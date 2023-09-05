@@ -3,9 +3,10 @@ import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { useCartContext } from '../contexts/CartProvider';
+import { ICartItem, useCartContext } from '../contexts/CartProvider';
 import FormFields from '../components/ShpoppingCart/FormCart/FormFields';
 import CartProducts from '../components/ShpoppingCart/FormCart/CartProducts';
+import { postFormData } from '../api/api';
 
 const CartContainer = styled(Box)(() => ({
   width: '100%',
@@ -45,20 +46,28 @@ export default function ShoppingCart() {
     control, handleSubmit, getValues, reset,
   } = useForm();
 
-  const { totalAmount, cartProducts } = useCartContext();
+  const { totalAmount, cartProducts, clearCart } = useCartContext();
 
-  const onSubmit = () => {
-    const formData = getValues();
-    const cartData = cartProducts;
+  const onSubmit = async () => {
+    try {
+      const formData = getValues();
+      const cartData: ICartItem[] = cartProducts;
 
-    const dataToSend = {
-      formData,
-      cartData,
-    };
+      const dataToSend = {
+        formData,
+        cartData,
+      };
 
-    console.log(dataToSend);
+      const response = await postFormData.fetch(dataToSend);
 
-    reset();
+      clearCart();
+      reset();
+
+      return response;
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

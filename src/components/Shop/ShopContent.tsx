@@ -32,7 +32,7 @@ const SearchFieldContainer = styled(Box)({
 const ScrollableContent = styled(Box)(() => ({
   width: '100%',
   overflow: 'auto',
-  flex: '1', // Займає все доступне місце, щоб дозволити прокрутку
+  flex: '1',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

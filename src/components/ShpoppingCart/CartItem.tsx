@@ -71,7 +71,6 @@ export default function CartItem({
           alt={item.product.title}
         />
       </StyledCardActionArea>
-
       <ItemDetails>
         <Box>
           <Typography variant="subtitle2">Product: {item.product.title}</Typography>

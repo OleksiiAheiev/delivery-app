@@ -1,3 +1,5 @@
+import { ICartItem } from '../contexts/CartProvider';
+
 // data types
 export interface IMenuItem {
   id: string;
@@ -28,4 +30,16 @@ export interface FormRules {
   email: FieldRules;
   phone: FieldRules;
   address: FieldRules;
+}
+
+// cart types
+export interface IFormValues {
+  Name: string;
+  Email: string;
+  Phone: string;
+  Address: string;
+}
+
+export interface IFormSubmission {
+  cartData: ICartItem[];
 }
