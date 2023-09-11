@@ -56,6 +56,7 @@ export default function ShoppingCart() {
       const dataToSend = {
         formData,
         cartData,
+        totalAmount,
       };
 
       const response = await postFormData.fetch(dataToSend);
@@ -78,7 +79,7 @@ export default function ShoppingCart() {
           <CartProducts />
         </FormWrapper>
         <PurchaseControls>
-          <Typography>Total price: {totalAmount}</Typography>
+          <Typography>Total price: {totalAmount} ₴</Typography>
           <Button
             variant='outlined'
             size='large'

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Button,
   Card,
   CardActionArea,
   CardActions,
@@ -9,7 +10,6 @@ import {
 } from '@mui/material';
 import styled from '@emotion/styled';
 import { IMenuItem } from '../../types/types';
-import MainButton from '../Buttons';
 import { useCartContext } from '../../contexts/CartProvider';
 
 export interface ShopCartProps {
@@ -37,6 +37,15 @@ const StyledCardActions = styled(CardActions)(() => ({
   justifyContent: 'flex-end',
 }));
 
+export const MainButton = styled(Button)(() => ({
+  border: 'solid 1px #000',
+  borderRadius: '10px',
+  cursor: 'pointer',
+  padding: '7px 30px',
+  color: '#000',
+  backgroundColor: '#f0f0f0',
+}));
+
 export default function ShopCard({ product }: ShopCartProps) {
   const { addToCart, cartProducts } = useCartContext();
 
@@ -49,7 +58,7 @@ export default function ShopCard({ product }: ShopCartProps) {
   return (
     <StyledCard>
       <CardActionArea>
-        <CardMedia component="img" height="140" image={product.image} alt={product.title} />
+        <CardMedia component="img" height="170" image={product.image} alt={product.title} />
         <CardContent>
           <Typography gutterBottom variant="h5">
             {product.title.slice(0, 40)}

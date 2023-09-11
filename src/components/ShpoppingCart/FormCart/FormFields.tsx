@@ -39,7 +39,7 @@ export default function FormFields({ control }: FormFieldsProps) {
         <StyledInputField
           type='text'
           control={control}
-          name='Name'
+          name='name'
           variant='outlined'
           label='Name'
           rules={formRules.name}
@@ -47,7 +47,7 @@ export default function FormFields({ control }: FormFieldsProps) {
         <StyledInputField
           type='text'
           control={control}
-          name='Email'
+          name='email'
           variant='outlined'
           label='Email'
           rules={formRules.email}
@@ -55,7 +55,7 @@ export default function FormFields({ control }: FormFieldsProps) {
         <StyledInputField
           type='text'
           control={control}
-          name='Phone'
+          name='phone'
           variant='outlined'
           label='Phone'
           rules={formRules.phone}
@@ -63,7 +63,7 @@ export default function FormFields({ control }: FormFieldsProps) {
         <StyledInputField
           type='text'
           control={control}
-          name='Address'
+          name='address'
           variant='outlined'
           label='Address'
           rules={formRules.address}

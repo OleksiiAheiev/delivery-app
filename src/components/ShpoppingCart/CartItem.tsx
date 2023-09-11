@@ -74,7 +74,7 @@ export default function CartItem({
       <ItemDetails>
         <Box>
           <Typography variant="subtitle2">Product: {item.product.title}</Typography>
-          <Typography variant="subtitle2">Price: {item.product.price * item.quantity}</Typography>
+          <Typography variant="subtitle2">Price: {item.product.price * item.quantity} ₴</Typography>
           <Typography variant="subtitle2">Quantity: {item.quantity}</Typography>
         </Box>
         <DetailsGroup>

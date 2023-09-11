@@ -7,6 +7,7 @@ export interface IMenuItem {
   price: number;
   calories: number;
   image: string;
+  description: string;
 }
 
 export interface IShops extends IMenuItem {
@@ -33,13 +34,18 @@ export interface FormRules {
 }
 
 // cart types
-export interface IFormValues {
-  Name: string;
-  Email: string;
-  Phone: string;
-  Address: string;
-}
+// export interface IFormValues {
+//   name: string;
+//   email: string;
+//   phone: string;
+//   address: string;
+// }
 
 export interface IFormSubmission {
   cartData: ICartItem[];
+}
+
+export interface IHistoryTypes {
+  Email: string;
+  Phone: string;
 }

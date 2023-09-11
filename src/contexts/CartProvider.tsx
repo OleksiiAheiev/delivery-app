@@ -90,6 +90,7 @@ export default function CartProvider({ children }: IChildrenProps) {
 
   const clearCart = () => {
     setCartProducts([]);
+    saveCartToLocalStorage([]);
   };
 
   useEffect(() => {
