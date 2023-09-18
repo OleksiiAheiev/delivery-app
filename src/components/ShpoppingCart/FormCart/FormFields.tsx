@@ -9,7 +9,7 @@ import { Control } from 'react-hook-form';
 export const FormWrapper = styled(Box)(({theme}) => ({
   padding: '1.25rem 0.9375rem 0.625rem',
   border: '0.0625rem solid #000',
-  borderRadius: theme.spacing(2),
+  borderRadius: theme.spacing(1),
   boxShadow: '0.0625rem 0.125rem 0.25rem rgba(0, 0, 0, .2)',
   [theme.breakpoints.up('lg')]: {
     width: '100%',
