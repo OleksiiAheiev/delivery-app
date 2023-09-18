@@ -46,7 +46,7 @@ export default function CartProvider({ children }: IChildrenProps) {
     }
     return [];
   };
-  
+
   function saveCartToLocalStorage(cart: ICartItem[]) {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
@@ -64,6 +64,7 @@ export default function CartProvider({ children }: IChildrenProps) {
 
       setCartProducts(updatedCart);
       saveCartToLocalStorage(updatedCart);
+
     } else {
       setCartProducts(prevItems => [...prevItems, { product, quantity: 1 }]);
       saveCartToLocalStorage([...cartProducts, { product, quantity: 1 }]);
@@ -104,7 +105,7 @@ export default function CartProvider({ children }: IChildrenProps) {
       setCartProducts(cartFromLocalStorage);
     }
   }, []);
-  
+
   return (
     <CartContext.Provider value={{
       cartProducts,

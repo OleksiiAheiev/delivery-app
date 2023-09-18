@@ -2,54 +2,67 @@
 import React from 'react';
 import {
   Box,
+  Card,
   CardActionArea,
   CardMedia,
   IconButton,
-  Typography
+  Typography,
+  styled,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { ICartItem } from '../../contexts/CartProvider';
 import { IMenuItem } from '../../types/types';
-import styled from '@emotion/styled';
 
-const StyledItemContainer = styled(Box)(() => ({
-  border: 'solid 1px #000',
-  borderRadius: '10px',
-  padding: '10px',
+const StyledItemContainer = styled(Box)(({ theme }) => ({
+  border: 'solid 0.0625rem #000',
+  borderRadius: theme.spacing(1),
+  padding: theme.spacing(2),
+}));
+
+const StyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '20px',
-  '@media (min-width: 767px)': {
+  gap: theme.spacing(2),
+  [theme.breakpoints.up('sm')]: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 }));
 
-const StyledCardActionArea = styled(CardActionArea)(() => ({
-  maxWidth: '270px',
-  '@media (min-width: 767px)': {
-    maxWidth: '300px',
+const StyledCardActionArea = styled(CardActionArea)(({ theme }) => ({
+  minWidth: '15.625rem',
+  height: '15.625rem',
+  maxWidth: '20.625rem',
+  [theme.breakpoints.up('sm')]: {
+    minWidth: '16.875rem',
+    maxWidth: '21.875rem',
+    height: '16.875rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    minWidth: '20.625rem',
+    maxWidth: '25rem',
+    height: '18.75rem',
   },
 }));
 
-const ItemDetails = styled(Box)(() => ({
-  minWidth: '220px',
+const ItemDetails = styled(Box)(({ theme }) => ({
+  minWidth: '13.75rem',
   display: 'flex',
   flexDirection: 'column',
-  gap: '30px',
-  '@media (min-width: 1439px)': {
-    minWidth: '300px',
+  gap: theme.spacing(4),
+  [theme.breakpoints.up('xl')]: {
+    minWidth: '18.75rem',
   },
 }));
 
-const DetailsGroup = styled(Box)(() => ({
+const DetailsGroup = styled(Box)(({ theme }) => ({
   width: '100%',
   display: 'flex',
   justifyContent: 'flex-end',
-  gap: '30px',
+  gap: theme.spacing(4),
 }));
 
 interface ICartItemProps {
@@ -63,35 +76,36 @@ export default function CartItem({
 }: ICartItemProps) {
   return (
     <StyledItemContainer>
-      <StyledCardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={item.product.image}
-          alt={item.product.title}
-        />
-      </StyledCardActionArea>
-      <ItemDetails>
-        <Box>
-          <Typography variant="subtitle2">Product: {item.product.title}</Typography>
-          <Typography variant="subtitle2">Price: {item.product.price * item.quantity} ₴</Typography>
-          <Typography variant="subtitle2">Quantity: {item.quantity}</Typography>
-        </Box>
-        <DetailsGroup>
-          <IconButton
-            onClick={() => onChangeQuantity(item.product, item.quantity - 1)}
-            disabled={item.quantity === 1}
-          >
-            <RemoveIcon />
-          </IconButton>
-          <IconButton onClick={() => onChangeQuantity(item.product, item.quantity + 1)}>
-            <AddIcon />
-          </IconButton>
-          <IconButton onClick={() => onRemove(item.product)}>
-            <DeleteIcon />
-          </IconButton>
-        </DetailsGroup>
-      </ItemDetails>
+      <StyledCard>
+        <StyledCardActionArea>
+          <CardMedia
+            component="img"
+            image={item.product.image}
+            alt={item.product.title}
+          />
+        </StyledCardActionArea>
+        <ItemDetails>
+          <Box>
+            <Typography variant="subtitle2">Product: {item.product.title}</Typography>
+            <Typography variant="subtitle2">Price: {item.product.price * item.quantity} ₴</Typography>
+            <Typography variant="subtitle2">Quantity: {item.quantity}</Typography>
+          </Box>
+          <DetailsGroup>
+            <IconButton
+              onClick={() => onChangeQuantity(item.product, item.quantity - 1)}
+              disabled={item.quantity === 1}
+            >
+              <RemoveIcon />
+            </IconButton>
+            <IconButton onClick={() => onChangeQuantity(item.product, item.quantity + 1)}>
+              <AddIcon />
+            </IconButton>
+            <IconButton onClick={() => onRemove(item.product)}>
+              <DeleteIcon />
+            </IconButton>
+          </DetailsGroup>
+        </ItemDetails>
+      </StyledCard>
     </StyledItemContainer>
   );
 }

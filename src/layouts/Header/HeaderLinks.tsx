@@ -4,32 +4,28 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export const LinksContainer = styled(Box)(() => ({
+export const LinksContainer = styled(Box)(({ theme }) => ({
   display: 'none',
-  '@media (min-width: 1023px)': {
+  [theme.breakpoints.up('lg')]: {
     display: 'flex',
-    gap: '30px',
+    gap: theme.spacing(4),
     alignItems: 'center',
   },
 }));
 
-export const CustomLink = styled(Link)(() => ({
-  color: '#499ff5',
+export const CustomLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.primary.main,
   textDecoration: 'none',
   '&:visited': {
-    color: '#499ff5',
+    color: theme.palette.primary.main,
   }
 }));
 
-const StyledDivider = styled(Divider)(() => ({
-  height: '30px',
-  width: '1px',
-  backgroundColor: '#000'
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  height: theme.spacing(4),
+  width: '0.0625rem',
+  backgroundColor: theme.palette.primary.dark,
 }));
-
-export interface HeaderLinksProps {
-  linksContainerStyles?: React.CSSProperties;
-}
 
 export default function HeaderLinks() {
   return (

@@ -2,34 +2,34 @@ import React, { useState } from 'react';
 import {
   Box, Typography, styled, Tabs, Tab, useMediaQuery
 } from '@mui/material';
-import { IShops } from '../../types/types';
 import Loading from '../Loading';
+import { useAppContext } from '../../contexts/AppProvider';
 
-export const StyledShopNav = styled(Box)(() => ({
-  border: '1px solid #000',
-  borderTopLeftRadius: '5px',
-  borderTopRightRadius: '5px',
+export const StyledShopNav = styled(Box)(({ theme }) => ({
+  border: '0.0625rem solid #000',
+  borderRadius: theme.spacing(1),
+  boxShadow: '0.0625rem 0.125rem 0.25rem rgba(0, 0, 0, .2)',
   textAlign: 'center',
-  padding: '10px',
-  minHeight: '90px',
-  '@media (min-width: 1023px)': {
-    borderRadius: '5px',
+  padding: theme.spacing(1),
+  minHeight: '5.625rem',
+  [theme.breakpoints.up('lg')]: {
+    width: '18.75rem',
     display: 'flex',
     flexDirection: 'column',
-    padding: '20px 30px 0',
+    padding: '1.25rem 1.875rem 0',
     marginBottom: 0,
     '& > :first-of-type': {
-      marginBottom: '20px',
+      marginBottom: theme.spacing(2),
     },
   },
 }));
 
-export const StyledTabs = styled(Tabs)(() => ({
+export const StyledTabs = styled(Tabs)(({ theme }) => ({
   '.MuiTabs-flexContainer': {
     display: 'flex',
     justifyContent: 'flex-start',
     '& > :not(:last-child)': {
-      marginRight: '20px',
+      marginRight: theme.spacing(2),
     },
   },
   '.MuiTabs-scrollButtons.Mui-disabled': {
@@ -39,51 +39,42 @@ export const StyledTabs = styled(Tabs)(() => ({
     overflow: 'auto',
     scrollbarWidth: 'thin',
   },
-  '@media (min-width: 1023px)': {
-    width: '200px',
+  [theme.breakpoints.up('lg')]: {
+    width: '12.5rem',
     '.MuiTabs-flexContainer': {
       flexDirection: 'column',
       '& > :not(:last-child)': {
         marginRight: 0,
-        marginBottom: '40px',
+        marginBottom: theme.spacing(5),
       },
     },
   },
 }));
 
-export const StyledTab = styled(Tab)(() => ({
-  minWidth: '150px',
-  padding: '20px',
-  border: '1px solid #ccc',
-  '@media (min-width: 1023px)': {
+export const StyledTab = styled(Tab)(({ theme }) => ({
+  minWidth: '9.375rem',
+  padding: theme.spacing(2),
+  border: '0.0625rem solid #ccc',
+  [theme.breakpoints.up('lg')]: {
     '& > :not(:last-child)': {
-      marginBottom: '20px',
+      marginBottom: theme.spacing(2),
     },
   }
 }));
 
-export const StyledTypography = styled(Typography)(() => ({
+export const StyledTypography = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.main,
   fontWeight: '600',
 }));
 
-export interface IShopsType {
-  shops: IShops[];
-}
-
-export interface IShopClick {
-  // eslint-disable-next-line no-unused-vars
-  onShopClick: (shop: IShops) => void;
-}
-
-interface IShopsNavigationProps extends IShopsType, IShopClick { }
-
-export default function ShopsNavigation({ shops, onShopClick }: IShopsNavigationProps) {
+export default function ShopsNavigation() {
+  const { shops, loading, handleShopClick } = useAppContext();
   const [activeTab, setActiveTab] = useState(0);
-  const isLargeScreen = useMediaQuery('(min-width: 1023px)');
+  const isLargeScreen = useMediaQuery('(min-width: 1200px)');
 
   const handleTabsChange = (event: React.SyntheticEvent, index: number) => {
     setActiveTab(index);
-    onShopClick(shops[index]);
+    handleShopClick(shops[index]);
   };
 
   const orientation = isLargeScreen ? 'vertical' : 'horizontal';
@@ -91,22 +82,22 @@ export default function ShopsNavigation({ shops, onShopClick }: IShopsNavigation
   return (
     <StyledShopNav>
       <StyledTypography variant='h6'>Shops:</StyledTypography>
-      <StyledTabs
-        orientation={orientation}
-        variant='scrollable'
-        scrollButtons='auto'
-        textColor="inherit"
-        value={activeTab}
-        onChange={handleTabsChange}
-      >
-        {shops ? (
-          shops.map((shop, id) => (
-            <StyledTab key={`${shop.id}-${id}`} label={shop.shop} />
-          ))
-        ) : (
+        {loading ? (
           <Loading />
-        )}
+        ) : (
+          <StyledTabs
+            orientation={orientation}
+            variant='scrollable'
+            scrollButtons='auto'
+            textColor="inherit"
+            value={activeTab}
+            onChange={handleTabsChange}
+          >
+            {shops.map((shop, id) => (
+              <StyledTab key={`${shop.id}-${id}`} label={shop.shop} />
+            ))}
       </StyledTabs>
+        )}
     </StyledShopNav>
   );
 }

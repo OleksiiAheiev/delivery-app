@@ -4,27 +4,27 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export const LinksContainer = styled(Box)(() => ({
-  padding: '70px 35px 20px',
+export const LinksContainer = styled(Box)(({ theme }) => ({
+  padding: '4.375rem 2.1875rem 1.25rem',
   display: 'flex',
   flexDirection: 'column',
-  gap: '10px',
-  '@media (min-width: 1023px)': {
+  gap: theme.spacing(1),
+  [theme.breakpoints.up('lg')]: {
     display: 'none',
   },
 }));
 
-export const CustomLink = styled(Link)(() => ({
-  color: '#499ff5',
+export const CustomLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.primary.main,
   textDecoration: 'none',
   '&:visited': {
-    color: '#499ff5',
+    color: theme.palette.primary.main,
   }
 }));
 
 const StyledDivider = styled(Divider)(() => ({
-  height: '1px',
-  width: '100px',
+  height: '0.0625rem',
+  width: '6.25rem',
 }));
 
 export default function HeaderDrawerLinks() {

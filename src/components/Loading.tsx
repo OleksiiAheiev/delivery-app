@@ -3,12 +3,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import styled from '@emotion/styled';
 
-const StyledBox = styled(Box)({
+const StyledBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '70svh',
-});
+  margin: '0 auto',
+}));
 
 export default function Loading() {
   return (

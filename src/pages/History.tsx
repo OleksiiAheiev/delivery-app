@@ -1,29 +1,53 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
-import { Box, Button } from '@mui/material';
-import { StyledInputField } from '../components/ShpoppingCart/FormCart/FormFields';
+import { Box, styled } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { formRules } from '../helper/rules';
 import { getHistoryData } from '../api/api';
-import HistoryCard, { IOrderItem } from '../components/History/HistoryCard';
+import { IOrderItem } from '../components/History/HistoryCardItems';
+import HistoryForm from '../components/History/HistoryForm';
+import HistoryCardItems from '../components/History/HistoryCardItems';
 
-const HistoryContainer = styled(Box)({
-  border: '1px solid #000',
-  borderRadius: '5px',
-  height: '90svh',
-});
-
-const HistoryFormWrapper = styled(Box)({
-});
-
-const HistoryItemsWrapper = styled(Box)({
-  display: 'grid',
-  gridTemplateRows: 'repeat(3, minmax(200px, 1fr))',
-  gap: '20px',
+const HistoryContainer = styled(Box)(({ theme }) => ({
+  border: '0.0625rem solid #000',
+  borderRadius: theme.spacing(1),
+  boxShadow: '0.0625rem 0.125rem 0.25rem rgba(0, 0, 0, .2)',
+  display: 'flex',
+  flexDirection: 'column',
+  padding: theme.spacing(1),
   height: '100%',
+  gap: theme.spacing(2),
+  [theme.breakpoints.up('lg')]: {
+    maxHeight: '90svh',
+    padding: theme.spacing(2),
+  },
+}));
+
+const HistoryFormWrapper = styled(Box)(({ theme }) => ({
+  border: '0.0625rem solid #000',
+  borderRadius: theme.spacing(1),
+  boxShadow: '0.0625rem 0.125rem 0.25rem rgba(0, 0, 0, .2)',
+  padding: theme.spacing(2),
+  width: '100%',
+  [theme.breakpoints.up('lg')]: {
+    padding: theme.spacing(4),
+  },
+}));
+
+const HistoryItemsWrapper = styled(Box)(({ theme }) => ({
+  border: '0.0625rem solid #000',
+  borderRadius: theme.spacing(1),
+  boxShadow: '0.0625rem 0.125rem 0.25rem rgba(0, 0, 0, .2)',
+  display: 'grid',
+  gap: theme.spacing(4),
+  padding: theme.spacing(1),
   overflow: 'auto',
-});
+  [theme.breakpoints.up('lg')]: {
+    height: '100%',
+    padding: theme.spacing(4),
+  },
+}));
+
 export interface IOrderTypes {
+  id: number;
   formData: {
     email: string;
     phone: string;
@@ -33,7 +57,7 @@ export interface IOrderTypes {
 }
 
 export default function History() {
-  const { control, handleSubmit, getValues } = useForm();
+  const { control, getValues } = useForm();
   const [orderHistory, setOrderHistory] = useState<IOrderTypes[]>([]);
 
   const onSubmit = async () => {
@@ -54,41 +78,20 @@ export default function History() {
     }
   };
 
+  const historyItems = orderHistory.length === 0 ? null : (
+    <HistoryItemsWrapper>
+      {orderHistory.map((order, id) => (
+        <HistoryCardItems key={`${order.id}-${id}`} order={order} />
+      ))}
+    </HistoryItemsWrapper>
+  );
+
   return (
     <HistoryContainer>
       <HistoryFormWrapper>
-        <form>
-          <StyledInputField
-            type='text'
-            control={control}
-            name='Email'
-            variant='outlined'
-            label='Email'
-            rules={formRules.email}
-          />
-          <StyledInputField
-            type='text'
-            control={control}
-            name='Phone'
-            variant='outlined'
-            label='Phone'
-            rules={formRules.phone}
-          />
-          <Button
-            variant='outlined'
-            size='large'
-            onClick={handleSubmit(onSubmit)}
-          >
-            Find
-          </Button>
-        </form>
+        <HistoryForm control={control} onSubmit={onSubmit} />
       </HistoryFormWrapper>
-      <HistoryItemsWrapper>
-          {orderHistory &&
-            orderHistory.map((order, id) => (
-                <HistoryCard key={id} order={order} />
-            ))}
-      </HistoryItemsWrapper>
+      {historyItems}
     </HistoryContainer>
   );
 }

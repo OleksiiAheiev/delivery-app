@@ -1,16 +1,24 @@
+/* eslint-disable no-unused-vars */
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState
 } from 'react';
 import { getAllShops } from '../api/api';
-import { IShops } from '../types/types';
+import { IMenuItem, IShops } from '../types/types';
 import { IChildrenProps } from '../layouts/MainTemplate';
 
 interface IAppContext {
   shops: IShops[];
   error: string | null;
+  loading: boolean;
+  activeShop: IShops | null;
+  searchResults: IMenuItem[] | null;
+  handleShopClick: (shop: IShops) => void;
+  performSearch: (searchTerm: string) => void;
 }
 
 const AppContext = createContext<IAppContext | undefined>(undefined);
@@ -26,24 +34,74 @@ export const useAppContext = (): IAppContext => {
 export default function AppProvider({ children }: IChildrenProps) {
   const [shops, setShops] = useState<IShops[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [activeShop, setActiveShop] = useState<IShops | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<IMenuItem[] | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getAllShops.fetch();
-        const { data } = response;
-        setShops(data);
-      } catch (err) {
-        console.error('Error fetching data:', err);
-        setError('An error occurred while fetching data');
-      }
-    };
-
     fetchData();
   }, []);
-  
+
+  useEffect(() => {
+    if (shops.length > 0) {
+      setActiveShop(shops[0]);
+    }
+  }, [shops]);
+
+  const fetchData = async () => {
+    setLoading(true);
+
+    try {
+      const response = await getAllShops.fetch();
+      const { data } = response;
+
+      setShops(data);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError('An error occurred while fetching data');
+      setLoading(false);
+    }
+  };
+
+  const handleShopClick = useCallback((shop: IShops) => {
+    setActiveShop(shop);
+  }, []);
+
+  const allItems = useMemo(() => {
+    return activeShop
+      ? [...activeShop.burgers, ...activeShop.drinks, ...activeShop.desserts]
+      : [];
+  }, [activeShop]);
+
+  useEffect(() => {
+    if (activeShop) {
+      setSearchResults(allItems);
+    }
+  }, [activeShop]);
+
+  const performSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
+
+  useEffect(() => {
+    const searchResults = allItems.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(searchResults);
+  }, [searchTerm, allItems]);
+
   return (
-    <AppContext.Provider value={{ shops, error }}>
+    <AppContext.Provider value={{
+      shops,
+      error,
+      loading,
+      activeShop,
+      handleShopClick,
+      performSearch,
+      searchResults,
+    }}>
       {children}
     </AppContext.Provider>
   );

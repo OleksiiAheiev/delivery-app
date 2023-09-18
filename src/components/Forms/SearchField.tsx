@@ -1,36 +1,37 @@
 import React, { ChangeEvent } from 'react';
-import { TextField } from '@mui/material';
-import styled from '@emotion/styled';
+import { TextField, styled } from '@mui/material';
+import { useAppContext } from '../../contexts/AppProvider';
 
-const StyledTextField = styled(TextField)(() => ({
-  backgroundColor: '#fff',
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.light,
   width: '100%',
-  borderRadius: '10px',
+  borderRadius: theme.spacing(1),
   '& .MuiOutlinedInput-root': {
-    borderRadius: '10px',
+    borderRadius: theme.spacing(1),
     '& fieldset': {
-      borderColor: '#fff',
+      borderColor: theme.palette.primary.dark,
     },
     '&:hover fieldset': {
-      borderColor: '#fff',
+      borderColor: theme.palette.primary.dark,
     },
     '&.Mui-focused fieldset': {
-      borderRadius: '10px',
-      borderColor: '#fff',
+      borderRadius: theme.spacing(1),
+      borderColor: theme.palette.primary.dark,
     },
   },
   '& .MuiInputLabel-root': {
-    borderRadius: '10px',
-    color: '#000',
-    '&.Mui-focused': {
-      color: '#000',
-    },
+    borderRadius: theme.spacing(1),
+    color: theme.palette.primary.main,
   },
 }));
 
 export default function SearchField() {
+  const { performSearch } = useAppContext();
+
   const handleChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
+    const searchTerm = event.target.value;
+
+    performSearch(searchTerm);
   };
 
   return (

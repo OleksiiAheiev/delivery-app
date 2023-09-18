@@ -1,33 +1,35 @@
 import React, { Suspense, lazy } from 'react';
-import { Box } from '@mui/material';
-import styled from '@emotion/styled';
-import { IShops } from '../../types/types';
+import { Box, styled } from '@mui/material';
 import Loading from '../Loading';
 import SearchField from '../Forms/SearchField';
+import { useAppContext } from '../../contexts/AppProvider';
 
-const ShopContainer = styled(Box)(() => ({
-  border: '1px solid #000',
-  borderBottomLeftRadius: '5px',
-  borderBottomRightRadius: '5px',
+const ShopContainer = styled(Box)(({ theme }) => ({
+  border: '0.0625rem solid #000',
+  borderRadius: theme.spacing(1),
+  boxShadow: '0 0.125rem 0.25rem rgba(0, 0, 0, 0.1)',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  padding: '10px',
-  '@media (min-width: 1023px)': {
-    borderRadius: '5px',
-    padding: '20px',
+  padding: theme.spacing(1),
+  minHeight: '80svh',
+  [theme.breakpoints.up('lg')]: {
+    padding: theme.spacing(2),
     width: '100%',
   },
 }));
 
-const SearchFieldContainer = styled(Box)({
+const SearchFieldContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
-  borderRadius: '10px',
-  width: 'calc(100% - 100px)',
-  backgroundColor: '#fff',
-  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-  marginBottom: '30px',
-});
+  borderRadius: theme.spacing(1),
+  width: 'calc(100% - 6.25rem)',
+  backgroundColor: theme.palette.primary.light,
+  boxShadow: '0 0.125rem 0.25rem rgba(0, 0, 0, 0.1)',
+  marginBottom: theme.spacing(4),
+  [theme.breakpoints.up('xl')]: {
+    width: '50%',
+  }
+}));
 
 const ScrollableContent = styled(Box)(() => ({
   width: '100%',
@@ -38,37 +40,30 @@ const ScrollableContent = styled(Box)(() => ({
   alignItems: 'center',
 }));
 
-const StyledShopGrid = styled(Box)(() => ({
+const StyledShopGrid = styled(Box)(({ theme }) => ({
   display: 'grid',
-  gridTemplateColumns: 'repeat(1, minmax(250px, 350px))',
-  gap: '30px',
+  gridTemplateColumns: 'repeat(1, minmax(15.625rem, 28.125rem))',
+  gap: theme.spacing(4),
   position: 'relative',
-  '@media (min-width: 768px)': {
-    gridTemplateColumns: 'repeat(2, minmax(250px, 400px))',
-    gap: '30px 50px'
+  [theme.breakpoints.up('md')]: {
+    gridTemplateColumns: 'repeat(2, minmax(15.625rem, 28.125rem))',
+    gap: '1.875rem 3.125rem'
   },
-  '@media (min-width: 1440px)': {
-    gridTemplateColumns: 'repeat(2, minmax(250px, 400px))',
-    gap: '40px 200px'
+  [theme.breakpoints.up('xl')]: {
+    gridTemplateColumns: 'repeat(2, minmax(20.625rem, 31.25rem))',
+    gap: '2.5rem 12.5rem'
   },
 }));
 
 const LoadingContainer = styled(Box)(() => ({
   position: 'absolute',
   top: '50%',
-  left: '50%',
 }));
-
-export interface IShopProps {
-  activeShop: IShops | null;
-}
 
 const LazyShopCard = lazy(() => import('./ShopCard'));
 
-export default function ShopContent({ activeShop }: IShopProps) {
-  const allItems = activeShop
-    ? [...activeShop.burgers, ...activeShop.drinks, ...activeShop.desserts]
-    : [];
+export default function ShopContent() {
+  const { loading, searchResults } = useAppContext();
 
   return (
     <ShopContainer>
@@ -76,17 +71,19 @@ export default function ShopContent({ activeShop }: IShopProps) {
         <SearchField />
       </SearchFieldContainer>
       <ScrollableContent>
-        <StyledShopGrid>
-          {activeShop ? (
-            allItems.map((product, id) => (
+        {loading ? (
+          <LoadingContainer>
+            <Loading />
+          </LoadingContainer>
+        ) : (
+          <StyledShopGrid>
+            {searchResults && searchResults.map((product, id) => (
               <Suspense key={`${product.title}-${id}`} fallback={<Loading />}>
                 <LazyShopCard product={product} />
               </Suspense>
-            ))
-          ) : (
-            <LoadingContainer><Loading /></LoadingContainer>
-          )}
-        </StyledShopGrid>
+            ))}
+          </StyledShopGrid>
+        )}
       </ScrollableContent>
     </ShopContainer>
   );

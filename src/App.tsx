@@ -1,5 +1,5 @@
 import React from 'react';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainTemplate from './layouts/MainTemplate';
 import Shops from './pages/Shops';
@@ -8,12 +8,13 @@ import History from './pages/History';
 import NotFound from './pages/NotFound';
 import AppProvider from './contexts/AppProvider';
 import CartProvider from './contexts/CartProvider';
+import theme from './theme';
 // import Screen from './test';
 
 export default function App() {
   return (
-    <>
-    <CssBaseline/>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <AppProvider>
         <CartProvider>
           <BrowserRouter>
@@ -29,7 +30,6 @@ export default function App() {
           </BrowserRouter>
         </CartProvider>
       </AppProvider>
-    </>
-
+    </ThemeProvider>
   );
 }

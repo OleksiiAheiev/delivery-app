@@ -6,29 +6,25 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Typography
+  Typography,
+  styled
 } from '@mui/material';
-import styled from '@emotion/styled';
 import { IMenuItem } from '../../types/types';
 import { useCartContext } from '../../contexts/CartProvider';
 
-export interface ShopCartProps {
-  product: Required<IMenuItem>;
-}
-
-const StyledCard = styled(Card)(() => ({
+const StyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  minWidth: '280px',
+  minWidth: '17.5rem',
   overflow: 'visible',
-  '@media (min-width: 767px)': {
-    padding: '10px',
-    minWidth: '300px',
+  [theme.breakpoints.up('md')]: {
+    padding: theme.spacing(1),
+    minWidth: '18.75rem',
   },
-  '@media (min-width: 1480px)': {
-    padding: '10px',
-    width: '400px',
+  [theme.breakpoints.up('lg')]: {
+    padding: theme.spacing(1),
+    width: '25rem',
   },
 }));
 
@@ -37,14 +33,18 @@ const StyledCardActions = styled(CardActions)(() => ({
   justifyContent: 'flex-end',
 }));
 
-export const MainButton = styled(Button)(() => ({
-  border: 'solid 1px #000',
-  borderRadius: '10px',
+export const MainButton = styled(Button)(({ theme }) => ({
+  border: 'solid 0.0625rem #000',
+  borderRadius: theme.spacing(1),
+  backgroundColor: theme.palette.primary.light,
+  color: theme.palette.primary.dark,
   cursor: 'pointer',
-  padding: '7px 30px',
-  color: '#000',
-  backgroundColor: '#f0f0f0',
+  padding: '0.4375rem 1.875rem',
 }));
+
+export interface ShopCartProps {
+  product: Required<IMenuItem>;
+}
 
 export default function ShopCard({ product }: ShopCartProps) {
   const { addToCart, cartProducts } = useCartContext();
@@ -73,7 +73,7 @@ export default function ShopCard({ product }: ShopCartProps) {
       </CardActionArea>
       <StyledCardActions>
         <MainButton onClick={handleAddToCart}>
-          {isProductInCart ? 'Товар у корзині' : 'Додати у кошик'}
+          {isProductInCart ? 'Product in Cart' : 'Add to Cart'}
         </MainButton>
       </StyledCardActions>
     </StyledCard>

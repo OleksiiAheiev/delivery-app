@@ -10,15 +10,14 @@ export const Wrapper = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  flexGrow: 1,
   overflow: 'hidden',
 }));
 
-export const Container = styled(Box)(() => ({
-  padding: '30px 10px 10px',
+export const Container = styled(Box)(({ theme }) => ({
+  padding: '1.875rem 0.625rem 0.625rem',
   height: '100%',
-  '@media (min-width: 1023px)': {
-    padding: '30px 10px 10px',
+  [theme.breakpoints.up('lg')]: {
+    padding: '1.875rem 0.625rem 0.625rem',
   },
 }));
 

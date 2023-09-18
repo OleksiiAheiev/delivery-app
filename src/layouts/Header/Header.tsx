@@ -13,18 +13,24 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
 
-export const IconContainerRight = styled(Box)(() => ({
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.light,
+  boxShadow: 'none',
+  zIndex: 11111,
+}));
+
+export const IconContainerRight = styled(Box)(({ theme }) => ({
   marginLeft: 'auto',
-  '@media (min-width: 1023px)': {
+  [theme.breakpoints.up('lg')]: {
     display: 'none'
   },
 }));
 
-export const IconContainerLeft = styled(Box)(() => ({
+export const IconContainerLeft = styled(Box)(({ theme }) => ({
   display: 'flex',
-  gap: '30px',
+  gap: theme.spacing(4),
   alignItems: 'center',
-  '@media (min-width: 1023px)': {
+  [theme.breakpoints.up('lg')]: {
     display: 'none',
   },
 }));
@@ -38,7 +44,7 @@ export default function Header() {
 
   return (
     <Container>
-      <AppBar sx={{ backgroundColor: '#f9f9f9', zIndex: 11111, boxShadow: 'none' }}>
+      <StyledAppBar>
         <Toolbar>
           <Link to='/'>
             <IconContainerLeft>
@@ -57,7 +63,7 @@ export default function Header() {
             </IconButton>
           </IconContainerRight>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
       <DrawerMenu open={isDrawerOpen} onClose={handleToggle} />
     </Container>
   );
