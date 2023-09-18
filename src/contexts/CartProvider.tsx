@@ -31,6 +31,7 @@ export default function CartProvider({ children }: IChildrenProps) {
   const [cartProducts, setCartProducts] = useState<ICartItem[]>([]);
   const [totalAmount, setTotalAmount] = useState<number>(0);
 
+  // Calculate the total amount of items in the cart.
   const calculateTotalAmount = (cartItems: ICartItem[]) => {
     let total = 0;
     for (const cartItem of cartItems) {
@@ -39,6 +40,12 @@ export default function CartProvider({ children }: IChildrenProps) {
     return total;
   };
 
+  // Save cart data to local storage.
+  function saveCartToLocalStorage(cart: ICartItem[]) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  // Load cart data from local storage when the component mounts.
   const loadCartFromLocalStorage = () => {
     const cartData = localStorage.getItem('cart');
     if (cartData) {
@@ -47,10 +54,7 @@ export default function CartProvider({ children }: IChildrenProps) {
     return [];
   };
 
-  function saveCartToLocalStorage(cart: ICartItem[]) {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }
-
+  // Add a product to the cart.
   const addToCart = (product: IMenuItem) => {
     const existingCartItem = cartProducts.find(item => item.product.id === product.id);
 
@@ -71,12 +75,14 @@ export default function CartProvider({ children }: IChildrenProps) {
     }
   };
 
+  // Remove a product from the cart.
   const removeFromCart = (product: IMenuItem) => {
     const updatedCart = cartProducts.filter(item => item.product.id !== product.id);
     setCartProducts(updatedCart);
     saveCartToLocalStorage(updatedCart);
   };
 
+  // Change the quantity of a product in the cart.
   const changeQuantity = (product: IMenuItem, newQuantity: number) => {
     if (newQuantity <= 0) return;
 
@@ -89,16 +95,19 @@ export default function CartProvider({ children }: IChildrenProps) {
     setCartProducts(updatedCart);
   };
 
+  // Clear the entire cart.
   const clearCart = () => {
     setCartProducts([]);
     saveCartToLocalStorage([]);
   };
 
+  // Calculate the total amount when cartProducts change.
   useEffect(() => {
     const newTotalAmount = calculateTotalAmount(cartProducts);
     setTotalAmount(newTotalAmount);
   }, [cartProducts]);
 
+  // Load cart data from local storage when the component mounts.
   useEffect(() => {
     const cartFromLocalStorage = loadCartFromLocalStorage();
     if (cartFromLocalStorage.length > 0) {

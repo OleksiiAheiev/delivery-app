@@ -23,6 +23,7 @@ interface IAppContext {
 
 const AppContext = createContext<IAppContext | undefined>(undefined);
 
+// Custom hook for accessing the application context.
 export const useAppContext = (): IAppContext => {
   const context = useContext(AppContext);
   if (!context) {
@@ -43,6 +44,7 @@ export default function AppProvider({ children }: IChildrenProps) {
     fetchData();
   }, []);
 
+  // Setting the first shop as active if shops are available.
   useEffect(() => {
     if (shops.length > 0) {
       setActiveShop(shops[0]);
@@ -69,12 +71,14 @@ export default function AppProvider({ children }: IChildrenProps) {
     setActiveShop(shop);
   }, []);
 
+  // Combining all menu items from the active shop.
   const allItems = useMemo(() => {
     return activeShop
       ? [...activeShop.burgers, ...activeShop.drinks, ...activeShop.desserts]
       : [];
   }, [activeShop]);
 
+  // Setting search results when the active shop changes.
   useEffect(() => {
     if (activeShop) {
       setSearchResults(allItems);
@@ -85,6 +89,7 @@ export default function AppProvider({ children }: IChildrenProps) {
     setSearchTerm(searchTerm);
   };
 
+  // Updating search results based on the search term.
   useEffect(() => {
     const searchResults = allItems.filter((item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
