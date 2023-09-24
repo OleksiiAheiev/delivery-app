@@ -34,7 +34,7 @@ export default function NotFound() {
         <Text>We can`t find the page you`re looking for</Text>
         <Text>
           Please press the
-          <Link to='/'>
+          <Link to='/delivery-app'>
             <IconButton aria-label="logo">
               <Logo />
             </IconButton>

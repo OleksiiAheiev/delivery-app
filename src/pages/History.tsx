@@ -73,8 +73,8 @@ export default function History() {
       });
 
       setOrderHistory(filteredOrders);
-    } catch (error) {
-      console.error('Помилка при отриманні замовлень', error);
+    } catch (err) {
+      console.error((err as Error).message);
     }
   };
 

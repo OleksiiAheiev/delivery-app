@@ -46,7 +46,7 @@ export default function Header() {
     <Container>
       <StyledAppBar>
         <Toolbar>
-          <Link to='/'>
+          <Link to='/delivery-app'>
             <IconContainerLeft>
               <IconButton aria-label="logo">
                 <HomeIcon />

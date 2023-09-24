@@ -52,8 +52,6 @@ export default function AppProvider({ children }: IChildrenProps) {
   }, [shops]);
 
   const fetchData = async () => {
-    setLoading(true);
-
     try {
       const response = await getAllShops.fetch();
       const { data } = response;
@@ -61,8 +59,8 @@ export default function AppProvider({ children }: IChildrenProps) {
       setShops(data);
       setLoading(false);
     } catch (err) {
-      console.error('Error fetching data:', err);
-      setError('An error occurred while fetching data');
+      console.error((err as Error).message);
+      setError((err as Error).message);
       setLoading(false);
     }
   };

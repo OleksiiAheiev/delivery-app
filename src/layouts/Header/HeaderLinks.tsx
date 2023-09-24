@@ -30,7 +30,7 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
 export default function HeaderLinks() {
   return (
     <LinksContainer>
-      <CustomLink to='/'>
+      <CustomLink to='/delivery-app'>
         <Typography>Shop</Typography>
       </CustomLink>
       <StyledDivider orientation='vertical' />

@@ -20,7 +20,7 @@ export default function App() {
           <BrowserRouter>
             <MainTemplate>
               <Routes>
-                <Route path='/' element={<Shops />} />
+                <Route path='/delivery-app' element={<Shops />} />
                 <Route path='/shopping-cart' element={<ShoppingCart />} />
                 <Route path='/history' element={<History />} />
                 {/* <Route path='/test' element={<Screen />} /> */}
