@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, Typography, styled } from '@mui/material';
 import { IMenuItem } from '../../types/types';
 import { IOrderTypes } from '../../pages/History';
@@ -43,7 +43,7 @@ interface HistoryCardProps {
   order: IOrderTypes;
 }
 
-export default function HistoryCardItems({ order }: HistoryCardProps) {
+export default memo(function HistoryCardItems({ order }: HistoryCardProps) {
   const { cartData, totalAmount } = order;
 
   return (
@@ -56,4 +56,4 @@ export default function HistoryCardItems({ order }: HistoryCardProps) {
       </CartDataWrapper>
     </CardWrapper>
   );
-}
+});

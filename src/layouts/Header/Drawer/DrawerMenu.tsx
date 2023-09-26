@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { SwipeableDrawer } from '@mui/material';
 import HeaderDrawerLinks from './HeaderDrawerLinks';
 
@@ -7,7 +7,7 @@ interface IDrawerProps {
   onClose: () => void;
 }
 
-export default function DrawerMenu({ open, onClose }: IDrawerProps) {
+export default memo(function DrawerMenu({ open, onClose }: IDrawerProps) {
   return (
     <SwipeableDrawer
       anchor='top'
@@ -18,5 +18,4 @@ export default function DrawerMenu({ open, onClose }: IDrawerProps) {
       <HeaderDrawerLinks />
     </SwipeableDrawer>
   );
-}
-
+});

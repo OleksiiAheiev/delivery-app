@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, styled } from '@mui/material';
 import Header from './Header/Header';
 
@@ -21,7 +21,7 @@ export const Container = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default function MainTemplate({ children }: IChildrenProps) {
+export default memo(function MainTemplate({ children }: IChildrenProps) {
   return (
     <Wrapper>
       <Header />
@@ -30,4 +30,4 @@ export default function MainTemplate({ children }: IChildrenProps) {
       </Container>
     </Wrapper>
   );
-}
+});

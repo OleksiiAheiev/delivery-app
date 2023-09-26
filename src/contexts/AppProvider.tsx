@@ -59,9 +59,11 @@ export default function AppProvider({ children }: IChildrenProps) {
       setShops(data);
       setLoading(false);
     } catch (err) {
-      console.error((err as Error).message);
-      setError((err as Error).message);
-      setLoading(false);
+      if (err instanceof Error) {
+        console.error(err.message);
+        setError(err.message);
+        setLoading(false);
+      }
     }
   };
 

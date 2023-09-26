@@ -74,7 +74,9 @@ export default function History() {
 
       setOrderHistory(filteredOrders);
     } catch (err) {
-      console.error((err as Error).message);
+      if (err instanceof Error) {
+        console.error(err.message);
+      }
     }
   };
 

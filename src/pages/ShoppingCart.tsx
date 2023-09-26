@@ -63,7 +63,9 @@ export default function ShoppingCart() {
 
       return response;
     } catch (err) {
-      console.error((err as Error).message);
+      if (err instanceof Error) {
+        console.error(err.message);
+      }
     }
   };
 

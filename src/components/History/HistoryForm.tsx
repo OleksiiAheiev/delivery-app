@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Button, FormControl, styled } from '@mui/material';
 import { formRules } from '../../helper/rules';
 import { Control, useForm } from 'react-hook-form';
@@ -58,7 +58,7 @@ interface IHistoryForm {
   onSubmit: () => void;
 }
 
-export default function HistoryForm({ control, onSubmit }: IHistoryForm) {
+export default memo(function HistoryForm({ control, onSubmit }: IHistoryForm) {
   const { handleSubmit } = useForm();
 
   return (
@@ -92,4 +92,4 @@ export default function HistoryForm({ control, onSubmit }: IHistoryForm) {
       </HistoryFormWrapper>
     </HistoryContainer>
   );
-}
+});

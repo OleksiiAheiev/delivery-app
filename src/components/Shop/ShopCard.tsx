@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   Button,
   Card,
@@ -46,7 +46,7 @@ export interface ShopCartProps {
   product: Required<IMenuItem>;
 }
 
-export default function ShopCard({ product }: ShopCartProps) {
+export default memo(function ShopCard({ product }: ShopCartProps) {
   const { addToCart, cartProducts } = useCartContext();
 
   const handleAddToCart = () => {
@@ -78,4 +78,4 @@ export default function ShopCard({ product }: ShopCartProps) {
       </StyledCardActions>
     </StyledCard>
   );
-}
+});

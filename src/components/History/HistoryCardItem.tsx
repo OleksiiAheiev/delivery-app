@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   Card,
   CardActionArea,
@@ -23,7 +23,7 @@ interface IHistoryCardItem {
   item: IOrderItem
 }
 
-export default function HistoryCardItem({ item }: IHistoryCardItem) {
+export default memo(function HistoryCardItem({ item }: IHistoryCardItem) {
   const { product } = item;
   
   return (
@@ -49,4 +49,4 @@ export default function HistoryCardItem({ item }: IHistoryCardItem) {
       </CardActionArea>
     </StyledCard>
   );
-}
+});

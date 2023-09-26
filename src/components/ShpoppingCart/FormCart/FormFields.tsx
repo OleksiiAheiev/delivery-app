@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   Box, FormControl, styled,
 } from '@mui/material';
@@ -59,7 +59,7 @@ interface FormFieldsProps {
   control: Control;
 }
 
-export default function FormFields({ control }: FormFieldsProps) {
+export default memo(function FormFields({ control }: FormFieldsProps) {
   return (
     <FormWrapper>
       <StyledFormControl>
@@ -98,4 +98,4 @@ export default function FormFields({ control }: FormFieldsProps) {
       </StyledFormControl>
     </FormWrapper>
   );
-}
+});

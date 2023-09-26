@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { memo } from 'react';
 import {
   Box,
   Card,
@@ -71,7 +71,7 @@ interface ICartItemProps {
   onChangeQuantity: (product: IMenuItem, newQuantity: number) => void;
 }
 
-export default function CartItem({
+export default memo(function CartItem({
   item, onRemove, onChangeQuantity
 }: ICartItemProps) {
   return (
@@ -108,4 +108,4 @@ export default function CartItem({
       </StyledCard>
     </StyledItemContainer>
   );
-}
+});
